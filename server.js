@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -6,10 +7,10 @@ const Pusher = require("pusher");
 
 //pusher config
 const pusher = new Pusher({
-  appId: "1230186",
-  key: "c04959f3d6abd77bd76b",
-  secret: "fbfc344dcd3eb18fb509",
-  cluster: "ap2",
+  appId: process.env.appId,
+  key: process.env.key,
+  secret: process.env.secret,
+  cluster: process.env.cluster,
   useTLS: true,
 });
 
@@ -22,8 +23,7 @@ app.use(express.json());
 app.use(cors());
 
 //db config
-const connectionURL =
-  "mongodb+srv://admin:21Jun2000%21%3F@cluster0.n4veq.mongodb.net/mern-instagram?retryWrites=true&w=majority";
+const connectionURL = process.env.CONNECTION_URL;
 
 mongoose.connect(connectionURL, {
   useCreateIndex: true,
@@ -67,7 +67,7 @@ app.post("/upload", (req, res) => {
 app.get("/posts", (req, res) => {
   posts
     .find()
-    .sort({ "createdAt": -1 })
+    .sort({ createdAt: -1 })
     .exec((err, data) => {
       if (err) {
         res.status(400).send(err);
