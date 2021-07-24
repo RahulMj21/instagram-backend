@@ -1,0 +1,19 @@
+{
+  "name": "instagram-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "Rahul Mondal",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dot-env": "^0.0.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.2",
+    "pusher": "^5.0.0",
+    "socket.io": "^4.1.3"
+  }
+}
