@@ -1,2 +1,2 @@
 # instagram-backend
-backend code of instagram clone
+backend code of mern-instagram clone
