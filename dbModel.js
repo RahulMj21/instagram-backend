@@ -6,7 +6,7 @@ const instance = mongoose.Schema(
     name: String,
     userImg: String,
     imageUrl: String,
-    comments: [],
+    comments: Array,
   },
   {
     timestamps: true,
