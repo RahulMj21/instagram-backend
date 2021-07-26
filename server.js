@@ -50,8 +50,12 @@ mongoose.connection.once("open", () => {
 });
 
 //api endpoints
-app.get("/", (req, res) => res.status(200).send("Hello from Rahul"));
 
+app.get("/", (req, res) =>
+  res.status(200).send("<h1>Hello from Instagram - 2.0 🚀🚀</h1>")
+);
+
+// upload a post
 app.post("/upload", (req, res) => {
   const body = req.body;
 
@@ -64,6 +68,28 @@ app.post("/upload", (req, res) => {
   });
 });
 
+// add comment
+app.post("/addcomment/:id", (req, res) => {
+  const id = req.params.id;
+
+  posts.findById(id, async (err, data) => {
+    if (err) {
+      res.status(400).send(err.message);
+    } else if (!data) {
+      res.status(404).send("Post not found");
+    } else {
+      data.comments = await [...data.comments, req.body];
+      await data
+        .save()
+        .then((comment) => {
+          res.json(comment);
+        })
+        .catch((err) => res.status(500).send(err.message));
+    }
+  });
+});
+
+// get posts
 app.get("/posts", (req, res) => {
   posts
     .find()
@@ -75,6 +101,22 @@ app.get("/posts", (req, res) => {
         res.status(200).send(data);
       }
     });
+});
+
+// get comments
+app.get("/comments/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    await posts.findById(id, (err, data) => {
+      if (err) {
+        res.status(400).send(err.message);
+      } else if (data.comments.length != 0) {
+        res.status(200).send(data.comments);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // app listner
